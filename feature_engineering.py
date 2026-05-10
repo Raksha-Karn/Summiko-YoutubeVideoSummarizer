@@ -93,19 +93,11 @@ def first_sentence_overlap(row):
 df["first_sentence_overlap"] = df.apply(first_sentence_overlap, axis=1)
 print(df.groupby("label")["first_sentence_overlap"].mean())
 
-
-
-# label
-# 0    0.504541
-# 1    0.319002
-# Name: relative_position, dtype: float64
-
-# label
-# 0    17.930931
-# 1    22.928428
-# Name: sentence_length, dtype: float64
-
-# label
-# 0    0.012576
-# 1    0.019267
-# Name: tfidf_score, dtype: float64
+feature_cols = [
+    "article_id", "sentence_id", "sentence", "label",
+    "relative_position", "sentence_length",
+    "tfidf_score", "named_entity_count", "first_sentence_overlap"
+]
+df[feature_cols].to_csv("features.csv", index=False)
+print("Saved features.csv")
+print(df[feature_cols].head())
