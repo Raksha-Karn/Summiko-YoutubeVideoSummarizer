@@ -1,10 +1,7 @@
-<!-- README.md -->
-
 <div align="center">
 
-<!-- Cute animated typing banner -->
 <img 
-  src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=900&color=FF7EB6&center=true&vCenter=true&width=700&lines=Summiko+%F0%9F%8C%B8;AI-Powered+YouTube+Video+Summarizer;Extractive+NLP+Sentence+Ranking;Built+with+spaCy+%2B+scikit-learn" 
+  src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=900&color=FF7EB6&center=true&vCenter=true&width=700&lines=Summiko+%F0%9F%8C%B8;NLP+Based+YouTube+Video+Summarizer;Extractive+NLP+Sentence+Ranking;Built+with+spaCy+%2B+scikit-learn" 
   alt="Typing SVG"
 />
 
