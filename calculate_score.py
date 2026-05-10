@@ -9,7 +9,7 @@ from tqdm import tqdm
 DATASET_PATH = Path("./cnn_dailymail")
 dataset = load_from_disk(DATASET_PATH)
 
-train_df = dataset["train"].to_pandas()
+train_df = dataset["train"].select(range(1000)).to_pandas()
 test_df = dataset["test"].to_pandas()
 val_df = dataset["validation"].to_pandas()
 
@@ -65,3 +65,28 @@ def label_article_semantic_top_k(article, highlights, k=3):
         
     return sentence_scores
 
+all_rows = []
+
+for article_id, row in tqdm(train_df.iterrows(), total=len(train_df)):
+    num_highlights = len(split_sentences(row["highlights"]))
+
+    labeled_sentences = label_article_semantic_top_k(
+        article=row["article"],
+        highlights=row["highlights"],
+        k=num_highlights
+    )
+
+    for item in labeled_sentences:
+        all_rows.append({
+            "article_id": article_id,
+            "sentence_id": item["sentence_id"],
+            "sentence": item["sentence"],
+            "score": item["score"],
+            "label": item["label"]
+        })
+
+sentence_df = pd.DataFrame(all_rows)
+print(sentence_df.head())
+print(sentence_df["label"].value_counts())
+
+sentence_df.to_csv("semantic_sentence_labels.csv", index=False)
