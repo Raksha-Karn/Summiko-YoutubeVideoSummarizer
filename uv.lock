@@ -680,6 +680,19 @@ wheels = [
 ]
 
 [[package]]
+name = "deepmultilingualpunctuation"
+version = "1.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "torch" },
+    { name = "transformers" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/63/d6/96fb37bc6bb3e647d68a2003e63b99458f9ac3535eab1e4fc95dbe95455b/deepmultilingualpunctuation-1.0.1.tar.gz", hash = "sha256:aaf3c0ca56dfef7d6f27d9e675850595c586d62f1fda46a687e0c1b004a76c11", size = 4223, upload-time = "2022-02-11T13:15:10.14Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/dc/a7/505f531c23aa2c381b597c9e59a62c20d9e6294f32ad7d06e4eaa2f3d438/deepmultilingualpunctuation-1.0.1-py3-none-any.whl", hash = "sha256:f346378adbecdcef84c63a61467f755d75385559d0260f60bef4315b5fb3a54f", size = 5366, upload-time = "2022-02-11T13:15:06.836Z" },
+]
+
+[[package]]
 name = "defusedxml"
 version = "0.7.1"
 source = { registry = "https://pypi.org/simple" }
@@ -3715,26 +3728,43 @@ wheels = [
 ]
 
 [[package]]
+name = "youtube-transcript-api"
+version = "1.2.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "defusedxml" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/60/43/4104185a2eaa839daa693b30e15c37e7e58795e8e09ec414f22b3db54bec/youtube_transcript_api-1.2.4.tar.gz", hash = "sha256:b72d0e96a335df599d67cee51d49e143cff4f45b84bcafc202ff51291603ddcd", size = 469839, upload-time = "2026-01-29T09:09:17.088Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/be/95/129ea37efd6cd6ed00f62baae6543345c677810b8a3bf0026756e1d3cf3c/youtube_transcript_api-1.2.4-py3-none-any.whl", hash = "sha256:03878759356da5caf5edac77431780b91448fb3d8c21d4496015bdc8a7bc43ff", size = 485227, upload-time = "2026-01-29T09:09:15.427Z" },
+]
+
+[[package]]
 name = "yt-video-summarizer"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "datasets" },
+    { name = "deepmultilingualpunctuation" },
     { name = "jupyter" },
     { name = "pandas" },
     { name = "scikit-learn" },
     { name = "sentence-transformers" },
     { name = "spacy" },
     { name = "tqdm" },
+    { name = "youtube-transcript-api" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "datasets", specifier = ">=4.8.5" },
+    { name = "deepmultilingualpunctuation", specifier = ">=1.0.1" },
     { name = "jupyter", specifier = ">=1.1.1" },
     { name = "pandas", specifier = ">=3.0.2" },
     { name = "scikit-learn", specifier = ">=1.8.0" },
     { name = "sentence-transformers", specifier = ">=5.4.1" },
     { name = "spacy", specifier = ">=3.8.14" },
     { name = "tqdm", specifier = ">=4.67.3" },
+    { name = "youtube-transcript-api", specifier = ">=1.2.4" },
 ]
