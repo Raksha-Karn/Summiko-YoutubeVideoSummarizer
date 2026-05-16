@@ -62,7 +62,32 @@ def get_transcript(video_url: str) -> str:
     return " ".join(snippet.text.strip() for snippet in fetched if snippet.text.strip())
 
 def add_punctuation(transcript_text: str) -> str:
-    return punctuation_model.restore_punctuation(transcript_text)
+    words = transcript_text.split()
+    chunk_size = 200
+    chunks = [words[i:i+chunk_size] for i in range(0, len(words), chunk_size)]
+    
+    result_words = []
+    for chunk in chunks:
+        chunk_text = " ".join(chunk)
+        predictions = punctuation_model(chunk_text)
+        
+        for pred in predictions:
+            word = pred["word"].replace("▁", "").strip()
+            entity = pred["entity_group"]
+            if not word:
+                continue
+            if entity == "0":
+                result_words.append(word)
+            elif entity == "PERIOD":
+                result_words.append(word + ".")
+            elif entity == "COMMA":
+                result_words.append(word + ",")
+            elif entity == "QUESTION":
+                result_words.append(word + "?")
+            else:
+                result_words.append(word)
+    
+    return " ".join(result_words)
 
 def split_sentences(text: str, min_words: int = 5) -> list[str]:
     doc = nlp(text)
