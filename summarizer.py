@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 from sklearn.feature_extraction.text import TfidfVectorizer
 from youtube_transcript_api import YouTubeTranscriptApi
-from deepmultilingualpunctuation import PunctuationModel
+from transformers import pipeline
 
 DATA_FOLDER = Path("data")
 MODEL_PATH = DATA_FOLDER / "sentence_importance_model.joblib"
@@ -25,7 +25,11 @@ FEATURE_COLS = [
 
 print("Loading models...")
 nlp = spacy.load("en_core_web_sm")
-punctuation_model = PunctuationModel()
+punctuation_model = pipeline(
+    "ner",
+    model="oliverguhr/fullstop-punctuation-multilang-large",
+    aggregation_strategy="simple"  
+)
 sentence_model = joblib.load(MODEL_PATH)
 threshold = joblib.load(THRESHOLD_PATH)
 print("Models loaded.\n")
