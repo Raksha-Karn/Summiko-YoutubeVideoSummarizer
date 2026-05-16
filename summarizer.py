@@ -23,7 +23,7 @@ FEATURE_COLS = [
     "first_sentence_overlap",
 ]
 
-print("Loading models...")
+print("Loading models")
 nlp = spacy.load("en_core_web_sm")
 punctuation_model = pipeline(
     "ner",
@@ -73,35 +73,29 @@ def add_punctuation(transcript_text: str) -> str:
         
         for pred in predictions:
             word = pred["word"].replace("▁", "").strip()
-            entity = pred["entity_group"]
+            label = pred["entity_group"]
             if not word:
                 continue
-            if entity == "0":
-                result_words.append(word)
-            elif entity == "PERIOD":
+            if label == ".":
                 result_words.append(word + ".")
-            elif entity == "COMMA":
+            elif label == ",":
                 result_words.append(word + ",")
-            elif entity == "QUESTION":
+            elif label == "?":
                 result_words.append(word + "?")
-            else:
+            else: 
                 result_words.append(word)
     
     return " ".join(result_words)
 
 def split_sentences(text: str, min_words: int = 5) -> list[str]:
     doc = nlp(text)
-    sentences = []
-    for sent in doc.sents:
-        cleaned = sent.text.strip()
-        word_count = len([t for t in sent if not t.is_punct and not t.is_space])
-        if word_count >= min_words:
-            sentences.append(cleaned)
-    return sentences
+    return [
+        sent.text.strip() for sent in doc.sents
+        if len([t for t in sent if not t.is_punct and not t.is_space]) >= min_words
+    ]
 
 def clean_words(text: str) -> set:
     return set(re.findall(r"\b[a-zA-Z]+\b", text.lower()))
-
 
 def compute_features(sentences: list[str]) -> pd.DataFrame:
     n = len(sentences)
@@ -141,12 +135,18 @@ def compute_features(sentences: list[str]) -> pd.DataFrame:
 def summarize(video_url: str, min_sentences: int = 3, max_sentences: int = 10) -> list[str]:
     print("Fetching transcript")
     raw_text = get_transcript(video_url)
+    print(raw_text)
+    print()
 
     print("Restoring punctuation")
     punctuated_text = add_punctuation(raw_text)
+    print(punctuated_text)
+    print()
 
     print("Splitting into sentences")
     sentences = split_sentences(punctuated_text)
+    print(sentences)
+    print()
 
     if len(sentences) < 3:
         raise ValueError(
